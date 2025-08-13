@@ -2,7 +2,7 @@ const express=require('express');
 const bodyParser=require('body-parser');
 const ServerConfig=require('./config/serverConfig');
 const connectDB = require('./config/dbConfig');
-
+// const User=require('./schema/userSchema')
 const app=express();
 // we can also write updated express body parser
 //eg. app.use(express.json()); and remove bodyparser=require
@@ -18,8 +18,16 @@ app.listen(ServerConfig.PORT,async()=>{
     await connectDB();
     console.log(`server started at port ${ServerConfig.PORT}`);
     //console.log(process.env.PORT)
+
+    //  const newUser=await User.create({
+    //   email:"abc@gmail.com",
+    //     password:"123456",
+    //     firstName:"ritesh",
+    //     lastName:"kumar",
+    //     mobileNumber:"9798256375"
+    //  });
+
+   // console.log("Created new user");
+   // console.log(newUser);
 })
 
-
-// 34.5.12.5:3000-> socket address(ip+port)
-//122.252.251.248-> localhost ka ip address
