@@ -1,9 +1,9 @@
-const userRepository=require('../repositories/userRepository');
+
 class userService{
 
     //in this argument we will expect userRepository object
-    constructor(userRepository){
-        this.userRepository=userRepository;
+    constructor(_userRepository){
+        this.userRepository=_userRepository;
     }
 
    async registerUser(userDetails){
