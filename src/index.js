@@ -1,5 +1,6 @@
 const express=require('express');
 const bodyParser=require('body-parser');
+
 const cookieParser=require('cookie-parser');
 const ServerConfig=require('./config/serverConfig');
 const connectDB = require('./config/dbConfig');
@@ -11,6 +12,7 @@ const uploader = require('./middlewares/multerMiddleware');
 const cloudinary=require('./config/cloudinaryConfig');
 
 const fs=require('fs/promises');
+const productRouter = require('./routes/productRoute');
 
 // const User=require('./schema/userSchema')
 const app=express();
@@ -25,6 +27,7 @@ app.use(bodyParser.urlencoded({extended:true}));//middleware to parse the url en
 app.use('/users',userRouter);// connect the router to the server
 app.use('/carts',cartRouter);
 app.use('/auth',authRouter);
+app.use('/products',productRouter);
 app.get('/ping',isLoggedIn,(req,res)=>{
     console.log(req.body);
     return res.json({message:"pong"});

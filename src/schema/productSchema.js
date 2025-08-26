@@ -1,6 +1,5 @@
 const mongoose=require('mongoose');
 const { applyTimestamps } = require('./userSchema');
-
 const productSchema=new mongoose.Schema({
     productName:{
         type:String,
