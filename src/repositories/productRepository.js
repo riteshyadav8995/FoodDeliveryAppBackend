@@ -14,6 +14,9 @@ module.exports={
 } 
   */
  const Product = require('../schema/productSchema'); 
+const BadRequestError = require('../utils/badRequestError');
+const InternalServerError = require('../utils/internalServerError');
+const NotFoundError = require('../utils/notFoundError');
 
 const createProduct = async (productData) => {
   try {
@@ -21,17 +24,45 @@ const createProduct = async (productData) => {
     const product = await Product.create(productData);
     return product;
   } catch (error) {
-    // --- THIS IS THE CRITICAL FIX ---
-    // Log the actual, detailed error from Mongoose to the console.
-    // This will tell us if it's a validation, schema, or connection error.
+    
+     if(error.name==='ValidationError'){
+     const errorMessageList=Object.keys(error.errors).map((property)=>{
+        return error.errors[property].message;
+     })
+        throw new BadRequestError(errorMessageList);
+      }
+
     console.error("--- MONGOOSE CREATE FAILED in Repository ---", error);
 
     // Re-throw the error so the service and controller layers are aware of it.
     // This prevents the function from returning 'undefined' on failure.
-    throw error;
+    throw new InternalServerError();
   }
 };
+ async function getProductById(productId){
+  try{
+     const product=await Product.findById(productId);
+     return product;
+  } catch(error){
+    console.log(error);
+    throw new InternalServerError();
+  }
+ }
 
+  async function deleteProductById(productId){
+    try{
+    const response=await Product.findByIdAndDelete(productId);
+    if(!response){
+      throw new NotFoundError('product');
+    }
+    return response;
+    }catch(error){
+      console.log(error);
+      throw new InternalServerError();
+    }
+  }
 module.exports = {
   createProduct,
+  getProductById,
+  deleteProductById
 };
