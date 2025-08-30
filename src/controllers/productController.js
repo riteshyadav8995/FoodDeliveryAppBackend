@@ -4,11 +4,10 @@ const AppError = require('../utils/appError');
 async function addProduct(req,res){
 
     try{
-        console.log("file recieved",req.file);
         const product=await createProduct({
     productName:req.body.productName,
     description:req.body.description,
-    imagePath:req.file.path,
+    imagePath:req.file?.path,
     price:req.body.price,
     category:req.body.category, // if catrgory is undefined then veg will be stored
     inStock:req.body.inStock, // if instock is undefined then true will be store
