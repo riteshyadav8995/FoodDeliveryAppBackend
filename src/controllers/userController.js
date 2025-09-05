@@ -10,9 +10,9 @@ async function createUser(req, res) {
             error: {}
         });
     } catch(error) {
-        return res.status(error.statusCode).json({
+        return res.status(error.statusCode || 500).json({
             success: false,
-            message: error.reason,
+            message: error.reason || error.message || "internal server error",
             data: {},
             error: error
         })
