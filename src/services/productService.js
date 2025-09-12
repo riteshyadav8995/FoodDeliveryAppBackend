@@ -76,7 +76,8 @@ async function createProduct(productDetails) {
         description,
         category,
         price: numericPrice, // Use the converted number
-        inStock: booleanInStock, // Use the converted boolean
+      //  inStock: booleanInStock, // Use the converted boolean
+      ...(inStock !== undefined && { inStock: (inStock === 'true') }),
         productImage: productImage // Use the URL from Cloudinary
     };
 

@@ -24,7 +24,6 @@ const {createCart}=require('../repositories/cartRepository');
        if(!newUser){
         throw{reason:'something went wrong, cannot create user',statusCode:500}
        }
-
        await createCart(newUser._id);
         //3. return the details of created user
         return newUser;
